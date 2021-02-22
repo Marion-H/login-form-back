@@ -8,6 +8,7 @@ const {
   uuidv4RegEx,
   mobileRegEx,
   strongRegExPwd,
+  emailRegEx,
 } = require("../middlewares/regEx");
 
 userApp.get("/", async (req, res) => {
@@ -47,11 +48,11 @@ userApp.post("/", async (req, res) => {
   try {
     const userIsExist = await User.findOne({ where: { name } });
     const emailIsExist = await User.findOne({ where: { email } });
-    console.log(emailIsExist);
     if (userIsExist === null && emailIsExist === null) {
       const checkRegExMobile = mobileRegEx.test(mobile);
       const checkRegExPwdStrong = strongRegExPwd.test(password);
-      if (checkRegExMobile && checkRegExPwdStrong) {
+      const checkRegExEmail = emailRegEx.test(email.toLowerCase());
+      if (checkRegExMobile && checkRegExPwdStrong && checkRegExEmail) {
         await User.create({ name, password, email, mobile });
         res.status(201).end();
       } else {
@@ -61,17 +62,24 @@ userApp.post("/", async (req, res) => {
             message: "wrong format mobile",
           });
         } else {
-          res.status(422).json({
-            status: "error",
-            message: "password is not strong",
-          });
+          if (!checkRegExEmail) {
+            res.status(422).json({
+              status: "error",
+              message: "the email format is not correct",
+            });
+          } else {
+            res.status(422).json({
+              status: "error",
+              message: "password is not strong",
+            });
+          }
         }
       }
     } else {
       if (userIsExist !== null) {
         res.status(422).json({
           status: "error",
-          message: "this email is already taken",
+          message: "this name is already taken",
         });
       } else {
         res.status(422).json({
