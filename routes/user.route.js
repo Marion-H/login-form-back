@@ -47,12 +47,24 @@ userApp.post("/", async (req, res) => {
   try {
     const userIsExist = await User.findOne({ where: { name } });
     if (userIsExist === null) {
-      //   await User.create({ name, password, email, mobile });
-      //   res.status(201).end();
       const checkRegExMobile = mobileRegEx.test(mobile);
       const checkRegExPwdStrong = strongRegExPwd.test(password);
-      console.log("pwd", checkRegExPwdStrong);
-      console.log("mobile", checkRegExMobile);
+      if (checkRegExMobile && checkRegExPwdStrong) {
+          await User.create({ name, password, email, mobile });
+          res.status(201).end();
+      } else {
+          if (!checkRegExMobile) {
+            res.status(422).json({
+                status: "error",
+                message: "wrong format mobile",
+              });
+          } else {
+            res.status(422).json({
+                status: "error",
+                message: "password is not strong",
+              });
+          }
+      }
     } else {
       res.status(422).json({
         status: "error",
