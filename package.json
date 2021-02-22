@@ -1,0 +1,40 @@
+{
+  "name": "login-form-back",
+  "version": "1.0.0",
+  "description": "it's an independent authentication module that can be implemented in any project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Marion-H/login-form-back.git"
+  },
+  "keywords": [
+    "authentication",
+    "form",
+    "login"
+  ],
+  "author": "Marion",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Marion-H/login-form-back/issues"
+  },
+  "homepage": "https://github.com/Marion-H/login-form-back#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.3.0",
+    "nodemon": "^2.0.7"
+  }
+}
