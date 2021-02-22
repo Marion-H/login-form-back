@@ -46,30 +46,39 @@ userApp.post("/", async (req, res) => {
   const { name, password, email, mobile } = req.body;
   try {
     const userIsExist = await User.findOne({ where: { name } });
-    if (userIsExist === null) {
+    const emailIsExist = await User.findOne({ where: { email } });
+    console.log(emailIsExist);
+    if (userIsExist === null && emailIsExist === null) {
       const checkRegExMobile = mobileRegEx.test(mobile);
       const checkRegExPwdStrong = strongRegExPwd.test(password);
       if (checkRegExMobile && checkRegExPwdStrong) {
-          await User.create({ name, password, email, mobile });
-          res.status(201).end();
+        await User.create({ name, password, email, mobile });
+        res.status(201).end();
       } else {
-          if (!checkRegExMobile) {
-            res.status(422).json({
-                status: "error",
-                message: "wrong format mobile",
-              });
-          } else {
-            res.status(422).json({
-                status: "error",
-                message: "password is not strong",
-              });
-          }
+        if (!checkRegExMobile) {
+          res.status(422).json({
+            status: "error",
+            message: "wrong format mobile",
+          });
+        } else {
+          res.status(422).json({
+            status: "error",
+            message: "password is not strong",
+          });
+        }
       }
     } else {
-      res.status(422).json({
-        status: "error",
-        message: "this name is already taken",
-      });
+      if (userIsExist !== null) {
+        res.status(422).json({
+          status: "error",
+          message: "this email is already taken",
+        });
+      } else {
+        res.status(422).json({
+          status: "error",
+          message: "an account already exists with this email",
+        });
+      }
     }
   } catch (err) {
     res.status(422).json({
