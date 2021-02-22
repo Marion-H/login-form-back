@@ -26,8 +26,8 @@ async function main() {
     await sequelize.sync();
     await sequelize.authenticate();
     console.log("Database succesfully joined");
-    app.listen(PORT, (err) => {
-      if (err) throw new Error(err.message);
+    app.listen(PORT, (error) => {
+      if (error) throw new Error(error.message);
       console.log(`Server is running on http://localhost:${PORT}`);
     });
   } catch (error) {
@@ -38,3 +38,6 @@ async function main() {
 if (process.env.NODE_ENV !== "test") {
   main();
 }
+
+
+module.exports = app

@@ -15,10 +15,10 @@ userApp.get("/", async (req, res) => {
   try {
     const resUsers = await User.findAll();
     res.status(200).json(resUsers);
-  } catch (err) {
+  } catch (error) {
     res.status(400).json({
       status: "error",
-      message: err.message,
+      message: error.message,
     });
   }
 });
@@ -38,7 +38,7 @@ userApp.get("/:uuid", regExIntCheck(uuidv4RegEx), async (req, res) => {
   } catch (error) {
     res.status(422).json({
       status: "error",
-      message: err.message,
+      message: error.message,
     });
   }
 });
@@ -88,10 +88,10 @@ userApp.post("/", async (req, res) => {
         });
       }
     }
-  } catch (err) {
+  } catch (error) {
     res.status(422).json({
       status: "error",
-      message: err.message,
+      message: error.message,
     });
   }
 });
