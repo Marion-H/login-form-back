@@ -1,0 +1,15 @@
+GET http://localhost:8080/users
+
+###
+GET http://localhost:8080/users/b4a662ae-5e0d-4eff-8ed6-0fb3bdb3946f
+
+###
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+    "name": "Aurel",
+    "password": "!salut65",
+    "email": "Aurel@gmail.com",
+    "mobile" : "08 19 96 29 86"
+}

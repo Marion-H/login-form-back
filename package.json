@@ -4,7 +4,10 @@
   "description": "it's an independent authentication module that can be implemented in any project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "NODE_ENV=test PORT=4001 mocha --timeout 5000 --exit",
+    "drop": "node dropinit.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +37,7 @@
   "devDependencies": {
     "chai": "^4.3.0",
     "chai-http": "^4.3.0",
+    "faker": "^5.4.0",
     "mocha": "^8.3.0",
     "nodemon": "^2.0.7"
   }
