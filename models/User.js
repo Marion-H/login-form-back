@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const SequelizeInstance = require("../sequelize");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 
 const User = SequelizeInstance.define(
   "User",
@@ -31,6 +31,11 @@ const User = SequelizeInstance.define(
   {
     defaultScope: {
       attributes: { exclude: ["password"] },
+    },
+    scopes: {
+      passwordActive: {
+        
+      },
     },
     hooks: {
       beforeCreate: (user) => {
