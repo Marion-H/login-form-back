@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/login", login)
-app.use("/user", user)
+app.use("/users", user)
 
 app.get("/", (req, res) => {
   res.status(200).send("Welcome in your API");

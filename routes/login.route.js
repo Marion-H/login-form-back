@@ -1,10 +1,10 @@
-const express = require("express")
+const express = require("express");
 
-const login = express.Router();
+const loginApp = express.Router();
 
 const User = require("../models/User");
 
-login.post("/", async (req, res) => {
+loginApp.post("/", async (req, res) => {
   const { user, password } = req.body;
   try {
     const userFind = await User.findOne({ where: { user } });
@@ -17,4 +17,4 @@ login.post("/", async (req, res) => {
   }
 });
 
-module.exports = login;
+module.exports = loginApp;
