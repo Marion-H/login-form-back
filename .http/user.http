@@ -8,8 +8,8 @@ POST http://localhost:8080/users
 Content-Type: application/json
 
 {
-    "name": "Aurel",
+    "name": "Aurel65",
     "password": "!salut65",
-    "email": "Aurel@gmail.com",
+    "email": "Aurel65@gmail.com",
     "mobile" : "08 19 96 29 86"
 }

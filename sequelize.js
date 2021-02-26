@@ -4,18 +4,26 @@ const Sequelize = require("sequelize");
 const {
   DB_USER,
   DB_PASSWORD,
-  DB_NAME,
+  DB_DATABASE,
   DB_DIALECT,
   DB_HOST,
   DB_TEST,
   NODE_ENV,
+  DATABASE_URL
 } = process.env;
+
+if (DATABASE_URL) {
+  module.exports = new Sequelize(DATABASE_URL, {
+    dialect: 'postgres'
+  })
+} else {
 
 module.exports = new Sequelize({
   host: DB_HOST,
   username: DB_USER,
   password: DB_PASSWORD,
-  database: NODE_ENV !== "test" ? DB_NAME : DB_TEST,
+  database: NODE_ENV !== "test" ? DB_DATABASE : DB_TEST,
   dialect: DB_DIALECT,
   logging: false,
-});
+})
+}
