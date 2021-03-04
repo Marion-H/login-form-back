@@ -12,7 +12,7 @@ const PORT = process.env.PORT;
 
 const env = process.env.NODE_ENV;
 
-const whitelist = process.env.CLIENT_URL;
+const whitelist = process.env.CLIENT_URLS.split(",");
 
 app.use(
   cors(
