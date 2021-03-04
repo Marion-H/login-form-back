@@ -23,8 +23,8 @@ loginApp.post("/", async (req, res) => {
           SECRET,
           { expiresIn: "1h" }
         );
-        const uuid = userFind.uuid;
-        res.status(200).json({ token, uuid });
+        const { uuid, name } = userFind;
+        res.status(200).json({ token, uuid, name });
       } else {
         res.status(401).json({
           status: "error",

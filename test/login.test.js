@@ -15,7 +15,7 @@ const sequelize = require("../sequelize");
 
 chai.use(chaiHttp);
 
-const userKey = ["uuid", "token"];
+const userKey = ["uuid", "token", "name"];
 
 const userProfil = {
   uuid: faker.random.uuid(),
