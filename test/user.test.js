@@ -12,10 +12,10 @@ const sequelize = require("../sequelize");
 
 chai.use(chaiHttp);
 
-const userKey = ["uuid", "name", "email", "mobile", "createdAt", "updatedAt"];
+const userKey = ["uuid", "username", "email", "mobile", "createdAt", "updatedAt"];
 const userGood = {
   uuid: faker.random.uuid(),
-  name: faker.internet.userName(),
+  username: faker.internet.userName(),
   password: `${faker.internet.password()}!`,
   email: faker.internet.email(),
   mobile: faker.phone.phoneNumber(),
@@ -91,7 +91,7 @@ describe("USER", () => {
           .request(server)
           .post("/users")
           .send({
-            name: faker.internet.userName(),
+            username: faker.internet.userName(),
             password: `${faker.internet.password()}!`,
             email: faker.internet.email(),
             mobile: faker.phone.phoneNumber(),
@@ -102,13 +102,13 @@ describe("USER", () => {
       }
     });
 
-    it("failed to create a new user with name already taken", async () => {
+    it("failed to create a new user with username already taken", async () => {
       try {
         const res = await chai
           .request(server)
           .post("/users")
           .send({
-            name: userGood.name,
+            username: userGood.username,
             password: `${faker.internet.password()}!`,
             email: faker.internet.email(),
             mobile: faker.phone.phoneNumber(),
@@ -116,7 +116,7 @@ describe("USER", () => {
         expect(res).have.status(422);
         expect(res.body).to.be.a("object");
         expect(res.body).have.keys(["status", "message"]);
-        expect(res.body.message).to.have.string('this name is already taken')
+        expect(res.body.message).to.have.string('this username is already taken')
       } catch (error) {
         throw error;
       }
@@ -128,7 +128,7 @@ describe("USER", () => {
             .request(server)
             .post("/users")
             .send({
-              name: faker.internet.userName(),
+              username: faker.internet.userName(),
               password: faker.internet.password(),
               email: faker.internet.email(),
               mobile: faker.phone.phoneNumber(),
@@ -148,7 +148,7 @@ describe("USER", () => {
             .request(server)
             .post("/users")
             .send({
-              name: faker.internet.userName(),
+              username: faker.internet.userName(),
               password: faker.internet.password(),
               email: faker.random.words(),
               mobile: faker.phone.phoneNumber(),
@@ -168,7 +168,7 @@ describe("USER", () => {
             .request(server)
             .post("/users")
             .send({
-              name: faker.internet.userName(),
+              username: faker.internet.userName(),
               password: faker.internet.password(),
               email: faker.random.words(),
               mobile: faker.random.number(),
@@ -188,7 +188,7 @@ describe("USER", () => {
             .request(server)
             .post("/users")
             .send({
-              name: faker.internet.userName(),
+              username: faker.internet.userName(),
               password: faker.internet.password(),
               email: userGood.email,
               mobile: faker.random.number(),
