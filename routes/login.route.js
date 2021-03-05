@@ -7,10 +7,10 @@ const loginApp = express.Router();
 const User = require("../models/User");
 
 loginApp.post("/", async (req, res) => {
-  const { name, password } = req.body;
+  const { username, password } = req.body;
   try {
     const userFind = await User.scope("passwordActive").findOne({
-      where: { name },
+      where: { username },
     });
     if (userFind !== null) {
       const isValide = userFind.validatePassword(password);
@@ -18,7 +18,7 @@ loginApp.post("/", async (req, res) => {
         const token = jwt.sign(
           {
             uuid: userFind.dataValues.uuid,
-            name: userFind.dataValues.name,
+            username: userFind.dataValues.username,
           },
           SECRET,
           { expiresIn: "1h" }
