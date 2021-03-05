@@ -16,18 +16,18 @@ const whitelist = process.env.CLIENT_URLS.split(",");
 
 app.use(
   cors(
-    {
-    origin: function (origin, callback) {
-      if (
-        whitelist.indexOf(origin) !== -1 ||
-        (env !== "production" && !origin)
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  }
+  //   {
+  //   origin: function (origin, callback) {
+  //     if (
+  //       whitelist.indexOf(origin) !== -1 ||
+  //       (env !== "production" && !origin)
+  //     ) {
+  //       callback(null, true);
+  //     } else {
+  //       callback(new Error("Not allowed by CORS"));
+  //     }
+  //   },
+  // }
   )
 );
 
