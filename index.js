@@ -6,6 +6,7 @@ const sequelize = require("./sequelize");
 
 const user = require("./routes/user.route")
 const login = require("./routes/login.route")
+const recover = require("./routes/recover.route")
 
 const app = express();
 const PORT = process.env.PORT;
@@ -35,6 +36,7 @@ app.use(express.json());
 
 app.use("/login", login)
 app.use("/users", user)
+app.use("/recover", recover)
 
 app.get("/", (req, res) => {
   res.status(200).send("Welcome in your API");
