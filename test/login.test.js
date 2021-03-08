@@ -19,7 +19,7 @@ const userKey = ["uuid", "token", "name"];
 
 const userProfil = {
   uuid: faker.random.uuid(),
-  name: faker.internet.userName(),
+  username: faker.internet.userName(),
   password: `${faker.internet.password()}!`,
   email: faker.internet.email(),
   mobile: faker.phone.phoneNumber(),
@@ -37,11 +37,11 @@ describe("LOGIN", () => {
   describe("post an user and receive a token", () => {
     it("should return an object with uuid and token", async () => {
       try {
-        const { name, password } = userProfil;
+        const { username, password } = userProfil;
         const res = await chai
           .request(server)
           .post("/login")
-          .send({ name, password });
+          .send({ username, password });
         expect(res).have.status(200);
         expect(res.body).to.be.a("object");
         expect(res.body).have.keys(userKey);
@@ -50,11 +50,11 @@ describe("LOGIN", () => {
       }
     });
 
-    it("failed to generate token with wrong name", async () => {
+    it("failed to generate token with wrong username", async () => {
       try {
         const { password } = userProfil;
         const res = await chai.request(server).post("/login").send({
-          name: faker.internet.userName(),
+          username: faker.internet.userName(),
           password,
         });
         expect(res).have.status(404);
@@ -68,12 +68,12 @@ describe("LOGIN", () => {
 
     it("failed to generate token with wrong password", async () => {
       try {
-        const { name } = userProfil;
+        const { username } = userProfil;
         const res = await chai
           .request(server)
           .post("/login")
           .send({
-            name,
+            username,
             password: `${faker.internet.password()}!`,
           });
         expect(res).have.status(401);

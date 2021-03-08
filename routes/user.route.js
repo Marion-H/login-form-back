@@ -44,16 +44,16 @@ userApp.get("/:uuid", regExIntCheck(uuidv4RegEx), async (req, res) => {
 });
 
 userApp.post("/", async (req, res) => {
-  const { name, password, email, mobile } = req.body;
+  const { username, password, email, mobile } = req.body;
   try {
-    const userIsExist = await User.findOne({ where: { name } });
+    const userIsExist = await User.findOne({ where: { username } });
     const emailIsExist = await User.findOne({ where: { email } });
     if (userIsExist === null && emailIsExist === null) {
       const checkRegExMobile = mobileRegEx.test(mobile);
       const checkRegExPwdStrong = strongRegExPwd.test(password);
       const checkRegExEmail = emailRegEx.test(email.toLowerCase());
       if (checkRegExMobile && checkRegExPwdStrong && checkRegExEmail) {
-        await User.create({ name, password, email, mobile });
+        await User.create({ username, password, email, mobile });
         res.status(201).end();
       } else {
         if (!checkRegExMobile) {
@@ -79,7 +79,7 @@ userApp.post("/", async (req, res) => {
       if (userIsExist !== null) {
         res.status(422).json({
           status: "error",
-          message: "this name is already taken",
+          message: "this username is already taken",
         });
       } else {
         res.status(422).json({

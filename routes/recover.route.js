@@ -2,10 +2,13 @@ const express = require("express");
 
 const recoverApp = express.Router();
 
+const env = process.env.NODE_ENV;
+
+const whitelist = process.env.CLIENT_URLS;
+
 const User = require("../models/User");
 
 const sgMail = require("@sendgrid/mail");
-const { createPool } = require("mysql2/promise");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 recoverApp.post("/", async (req, res) => {
@@ -25,33 +28,38 @@ recoverApp.post("/", async (req, res) => {
 
       // Save the updated user object
       const userSave = await findUser.save();
-      console.log(userSave)
+      // console.log(userSave);
 
       // send email
-      // let link =
-      //   "http://" +
-      //   req.headers.host +
-      //   "/api/reset/" +
-      //   userSave.resetPasswordToken;
+      let link;
+      if (env === "production") {
+        link = whitelist + "/reset/" + userSave.resetPasswordToken;
+      } else {
+        link =
+          "http://" +
+          "localhost:3000" +
+          "/reset/" +
+          userSave.resetPasswordToken;
+      }
 
-      // const mailOptions = {
-      //   to: userSave.email,
-      //   from: process.env.FROM_EMAIL,
-      //   subject: "Password change request",
-      //   text: `Hi ${userSave.name} \n 
-      //  Please click on the following link ${link} to reset your password. \n\n 
-      //  If you did not request this, please ignore this email and your password will remain unchanged.\n`,
-      // };
+      const mailOptions = {
+        to: userSave.email,
+        from: process.env.FROM_EMAIL,
+        subject: "Password change request",
+        text: `Hi ${userSave.username} \n 
+       Please click on the following link ${link} to reset your password. \n\n 
+       If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+      };
 
-      // sgMail.send(mailOptions, (error, result) => {
-      //   if (error) {
-      //     return res.status(500).json({ message: error });
-      //   } else {
-      //     res.status(200).json({
-      //       message: "A reset email has been sent to " + user.email + ".",
-      //     });
-      //   }
-      // });
+      sgMail.send(mailOptions, (error, result) => {
+        if (error) {
+          return res.status(500).json({ message: error });
+        } else {
+          res.status(200).json({
+            message: "A reset email has been sent to " + userSave.email + ".",
+          });
+        }
+      });
     }
   } catch (error) {
     res.status(422).json({

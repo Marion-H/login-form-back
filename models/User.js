@@ -12,7 +12,7 @@ const User = SequelizeInstance.define(
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4,
     },
-    name: {
+    username: {
       type: Sequelize.STRING(50),
       allowNull: false,
     },
