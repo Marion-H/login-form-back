@@ -1,0 +1,6 @@
+POST http://localhost:8080/reset/460bea7dddd5bb7470644c3628aed7e2974b0847
+Content-Type: application/json
+
+{
+    "password": "!Hello65"
+}
