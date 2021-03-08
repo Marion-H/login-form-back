@@ -1,0 +1,7 @@
+POST http://localhost:8080/recover
+Content-Type: application/json
+
+{
+    "email": "marion.hourdou@hotmail.fr"
+}
+
