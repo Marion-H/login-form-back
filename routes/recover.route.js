@@ -4,8 +4,6 @@ const recoverApp = express.Router();
 
 const env = process.env.NODE_ENV;
 
-const PORT = process.env.PORT;
-
 const whitelist = process.env.CLIENT_URLS;
 
 const User = require("../models/User");
@@ -32,7 +30,7 @@ recoverApp.post("/", async (req, res) => {
       if (env === "production") {
         link = `${whitelist}/reset/${serSave.resetPasswordToken}`;
       } else {
-        link = `http://localhost:${PORT}/reset/${userSave.resetPasswordToken}`;
+        link = `http://localhost:3000/reset/${userSave.resetPasswordToken}`;
       }
       
       const mailOptions = {
