@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
 
 async function main() {
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync();
     await sequelize.authenticate();
     console.log("Database succesfully joined");
     app.listen(PORT, (error) => {
