@@ -28,7 +28,7 @@ recoverApp.post("/", async (req, res) => {
 
       let link;
       if (env === "production") {
-        link = `${whitelist}/reset/${serSave.resetPasswordToken}`;
+        link = `${whitelist}/reset/${userSave.resetPasswordToken}`;
       } else {
         link = `http://localhost:3000/reset/${userSave.resetPasswordToken}`;
       }
